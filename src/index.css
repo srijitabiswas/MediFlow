@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Nunito', system-ui, sans-serif; background: #F0F7F4; color: #1C1917; -webkit-font-smoothing: antialiased; }
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-thumb { background: #9FE1CB; border-radius: 99px; }
+  button { font-family: inherit; }
+  input, textarea, select { font-family: inherit; }
+}
+
+@layer components {
+  .page-wrap    { @apply max-w-5xl mx-auto px-5 py-8; }
+  .page-wrap-lg { @apply max-w-6xl mx-auto px-5 py-8; }
+  .card         { @apply bg-white rounded-2xl border border-gray-100 shadow-sm; }
+  .card-hover   { @apply card transition-all duration-200 hover:-translate-y-1 hover:shadow-md cursor-pointer; }
+  .btn-primary  { @apply bg-teal-600 text-white font-bold rounded-xl px-5 py-3 border-0 cursor-pointer transition-all duration-150 hover:brightness-105 hover:-translate-y-0.5 active:scale-95; }
+  .btn-outline  { @apply bg-teal-50 text-teal-600 font-bold rounded-xl px-5 py-3 border-2 border-teal-100 cursor-pointer transition-all duration-150 hover:bg-teal-100 active:scale-95; }
+  .back-btn     { @apply flex items-center gap-1.5 text-teal-600 font-bold text-sm bg-teal-50 hover:bg-teal-100 px-4 py-2 rounded-xl border border-teal-100 transition-all duration-150 cursor-pointer w-fit mb-5; }
+  .section-title { @apply font-display text-3xl text-gray-900; }
+  .section-sub   { @apply text-gray-500 text-base mt-1; }
+  .stat-card    { @apply card p-5 flex flex-col gap-3; }
+  .input-field  { @apply w-full px-4 py-3 rounded-xl border-2 border-gray-200 text-sm outline-none focus:border-teal-400 transition-colors bg-white; }
+  .badge-green  { @apply text-xs font-bold px-2.5 py-1 rounded-full bg-green-50 text-green-700; }
+  .badge-yellow { @apply text-xs font-bold px-2.5 py-1 rounded-full bg-yellow-50 text-yellow-700; }
+  .badge-red    { @apply text-xs font-bold px-2.5 py-1 rounded-full bg-red-50 text-red-700; }
+  .badge-blue   { @apply text-xs font-bold px-2.5 py-1 rounded-full bg-blue-50 text-blue-700; }
+}
+
+/* Chatbot typing dots */
+.dot-typing span {
+  display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+  background: #0F6E56; margin: 0 2px; animation: bounceDot 1s infinite;
+}
+.dot-typing span:nth-child(2) { animation-delay: .2s; }
+.dot-typing span:nth-child(3) { animation-delay: .4s; }
+
+@keyframes bounceDot {
+  0%, 60%, 100% { transform: translateY(0); }
+  30%           { transform: translateY(-5px); }
+}
+
+/* Live pulse ring */
+@keyframes liveRing {
+  0%   { box-shadow: 0 0 0 0 rgba(15,110,86,.4); }
+  70%  { box-shadow: 0 0 0 8px rgba(15,110,86,0); }
+  100% { box-shadow: 0 0 0 0 rgba(15,110,86,0); }
+}
+.live-ring { animation: liveRing 2s ease-in-out infinite; }
