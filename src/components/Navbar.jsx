@@ -1,14 +1,15 @@
-import { useNavigate, useLocation } from 'react-router-dom';
-import { Activity } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Activity, User } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { useRequirePatientAccess } from '../utils/useRequirePatientAccess';
 
 const ROLES = ['patient', 'doctor', 'admin'];
-
 const ROLE_DEST = { patient: '/', doctor: '/doctor', admin: '/admin' };
 
 export default function Navbar() {
-  const { role, setRole } = useApp();
-  const navigate          = useNavigate();
+  const { role, setRole, isAuthenticated, user } = useApp();
+  const navigate = useNavigate();
+  const goToPatientFlow = useRequirePatientAccess();
 
   function handleRole(r) {
     setRole(r);
@@ -29,7 +30,7 @@ export default function Navbar() {
       </button>
 
       <div className="flex items-center gap-3">
-        {/* Role switcher */}
+        {/* Role switcher (demo only — doesn't require login to view Doctor/Admin dashboards) */}
         <div className="flex bg-teal-50 rounded-xl p-1 gap-0.5 border border-teal-100">
           {ROLES.map((r) => (
             <button
@@ -44,9 +45,9 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Context CTA */}
+        {/* Context CTA — routes through auth/location checks so it always lands in the right place */}
         {role === 'patient' && (
-          <button onClick={() => navigate('/book')} className="btn-primary text-sm px-4 py-2">
+          <button onClick={() => goToPatientFlow('/book')} className="btn-primary text-sm px-4 py-2">
             + Book Now
           </button>
         )}
@@ -66,6 +67,26 @@ export default function Navbar() {
             style={{ background: '#6C3483' }}
           >
             Admin Panel
+          </button>
+        )}
+
+        {/* Auth area */}
+        {isAuthenticated ? (
+          <button
+            onClick={() => navigate('/profile')}
+            className="flex items-center gap-2 pl-1 pr-3 py-1 rounded-full border border-teal-100 bg-teal-50 hover:bg-teal-100 cursor-pointer transition-colors"
+          >
+            <span className="w-7 h-7 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-xs">
+              {user?.fullName?.slice(0, 1).toUpperCase() || <User size={13} />}
+            </span>
+            <span className="text-xs font-bold text-teal-700 hidden sm:inline">{user?.fullName?.split(' ')[0]}</span>
+          </button>
+        ) : (
+          <button
+            onClick={() => navigate('/login')}
+            className="px-4 py-2 rounded-xl text-sm font-bold text-teal-700 border-2 border-teal-100 bg-white hover:bg-teal-50 cursor-pointer transition-colors"
+          >
+            Log In
           </button>
         )}
       </div>

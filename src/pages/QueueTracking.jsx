@@ -10,10 +10,14 @@ import QueueCard from '../components/cards/QueueCard';
 import DoctorStatus from '../components/dashboard/DoctorStatus';
 
 export default function QueueTracking() {
-  const { myBooking, doctors, queues, updateQueue, addToast } = useApp();
+  const { myBooking, doctors, queues, updateQueue, addToast, setRole } = useApp();
   const navigate = useNavigate();
 
+  useEffect(() => { setRole('patient'); }, [setRole]);
+
   const [selectedDocId, setSelectedDocId] = useState(myBooking?.doctor?.id || DOCTORS[0].id);
+
+  // ...rest of file is identical to before — no other changes needed
 
   const selDoc   = doctors.find((d) => d.id === selectedDocId) || doctors[0];
   const myQueue  = queues[selectedDocId] || [];

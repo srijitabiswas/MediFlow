@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, CheckCircle2, Clock, AlertTriangle, Siren, PlayCircle } from 'lucide-react';
 import { useApp } from '../context/AppContext';
@@ -6,8 +6,12 @@ import { DEPARTMENTS } from '../data/sampleData';
 import { statusInfo } from '../utils/helpers';
 
 export default function DoctorDashboard() {
-  const { doctors, queues, updateQueue, completeConsultation, markDelay, addEmergency, addToast } = useApp();
+  const { doctors, queues, updateQueue, completeConsultation, markDelay, addEmergency, addToast, setRole } = useApp();
   const navigate = useNavigate();
+
+  useEffect(() => { setRole('doctor'); }, [setRole]);
+
+  // ...rest of file is identical to before — no other changes needed
 
   const [activeId, setActiveId] = useState(doctors[0].id);
 

@@ -1,11 +1,14 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, PartyPopper } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import AppointmentCard from '../components/cards/AppointmentCard';
 
 export default function BookingConfirmation() {
-  const { myBooking } = useApp();
+  const { myBooking, setRole } = useApp();
   const navigate = useNavigate();
+
+  useEffect(() => { setRole('patient'); }, [setRole]);
 
   // Guard: no booking yet → send back to booking flow
   if (!myBooking) {
@@ -50,8 +53,8 @@ export default function BookingConfirmation() {
         <button onClick={() => navigate('/queue')} className="btn-primary flex-1 text-base py-3.5">
           Track My Queue →
         </button>
-        <button onClick={() => navigate('/dashboard')} className="btn-outline text-base py-3.5">
-          Dashboard
+        <button onClick={() => navigate('/profile')} className="btn-outline text-base py-3.5">
+          My Bookings
         </button>
       </div>
 

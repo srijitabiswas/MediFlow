@@ -1,6 +1,7 @@
 import { Calendar, Clock, MapPin } from 'lucide-react';
 import { DEPARTMENTS } from '../../data/sampleData';
 import { formatWait } from '../../utils/helpers';
+import { formatDistance } from '../../utils/distance';
 
 export default function AppointmentCard({ booking, onTrack }) {
   if (!booking) return null;
@@ -29,6 +30,19 @@ export default function AppointmentCard({ booking, onTrack }) {
           <p className="text-white font-black text-3xl">{booking.token}</p>
         </div>
       </div>
+
+      {/* Clinic location strip */}
+      {booking.clinicName && (
+        <div className="px-5 py-3 bg-gray-50 border-b border-gray-100 flex items-center gap-2">
+          <MapPin size={14} color="#6B7280" />
+          <p className="text-sm text-gray-600">
+            <span className="font-bold text-gray-800">{booking.clinicName}</span> · {booking.address}
+            {booking.distanceKm != null && (
+              <span className="text-teal-600 font-bold"> · {formatDistance(booking.distanceKm)} away</span>
+            )}
+          </p>
+        </div>
+      )}
 
       {/* Details grid */}
       <div className="p-5 grid grid-cols-2 gap-x-6 gap-y-4">

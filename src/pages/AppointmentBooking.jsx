@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, Check } from 'lucide-react';
 import { useApp } from '../context/AppContext';
@@ -13,8 +13,13 @@ import BookingSummary     from '../components/booking/BookingSummary';
 const STEP_LABELS = ['Department', 'Doctor', 'Time Slot', 'Confirm'];
 
 export default function AppointmentBooking() {
-  const { setMyBooking, addToast } = useApp();
+  const { setRole, bookAppointment, addToast } = useApp();
   const navigate = useNavigate();
+
+  // Safety net: this page is only ever meant for patients. If it was reached
+  // while role was still "doctor"/"admin" (e.g. via browser back button),
+  // force it back to "patient" so the Navbar/UI stays in sync.
+  useEffect(() => { setRole('patient'); }, [setRole]);
 
   const [step,    setStep]    = useState(1);
   const [dept,    setDept]    = useState(null);
@@ -49,14 +54,17 @@ export default function AppointmentBooking() {
         dept,
         doctor,
         slot,
+        clinicName:    doctor.clinicName,
+        address:       doctor.address,
+        distanceKm:    doctor.distanceFromUserKm,
         patientsAhead,
         queuePosition: patientsAhead + 1,
         waitMins,
         confidence,
         token,
-        bookedAt:      new Date(),
+        bookedAt:      new Date().toISOString(),
       };
-      setMyBooking(booking);
+      bookAppointment(booking);
       addToast('🎉 Appointment confirmed!', 'success');
       navigate('/confirmation');
     }, 700);

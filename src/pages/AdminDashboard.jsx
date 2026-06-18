@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, Calendar, Users, Stethoscope, Clock, AlertTriangle } from 'lucide-react';
 import { useApp } from '../context/AppContext';
@@ -6,8 +7,12 @@ import { statusInfo, formatDate } from '../utils/helpers';
 import StatsCard from '../components/cards/StatsCard';
 
 export default function AdminDashboard() {
-  const { doctors } = useApp();
+  const { doctors, setRole } = useApp();
   const navigate = useNavigate();
+
+  useEffect(() => { setRole('admin'); }, [setRole]);
+
+  // ...rest of file is identical to before — no other changes needed
 
   const totalAppts   = doctors.reduce((s, d) => s + d.patientsToday, 0);
   const totalWaiting = doctors.reduce((s, d) => s + d.patientsLeft, 0);

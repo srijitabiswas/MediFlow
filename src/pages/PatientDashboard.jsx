@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, Calendar, MapPin, Clock, ArrowRight } from 'lucide-react';
+import { ChevronLeft, Calendar, MapPin, Clock, ArrowRight, User } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { calcWaitTime, getSmartRecommendation } from '../utils/aiEngine';
 import { formatWait, formatDate } from '../utils/helpers';
@@ -8,8 +9,10 @@ import StatsCard from '../components/cards/StatsCard';
 import NotificationPanel from '../components/dashboard/NotificationPanel';
 
 export default function PatientDashboard() {
-  const { myBooking, doctors } = useApp();
+  const { myBooking, doctors, setRole, user } = useApp();
   const navigate = useNavigate();
+
+  useEffect(() => { setRole('patient'); }, [setRole]);
 
   // Find live doctor data matching the booking (falls back gracefully)
   const liveDoctor = myBooking ? doctors.find((d) => d.id === myBooking.doctor?.id) || myBooking.doctor : null;
@@ -31,9 +34,17 @@ export default function PatientDashboard() {
       </button>
 
       {/* Header */}
-      <div className="mb-7">
-        <h1 className="section-title">Patient Dashboard</h1>
-        <p className="section-sub">{formatDate()}</p>
+      <div className="mb-7 flex items-center justify-between flex-wrap gap-3">
+        <div>
+          <h1 className="section-title">Welcome{user?.fullName ? `, ${user.fullName.split(' ')[0]}` : ''}</h1>
+          <p className="section-sub">{formatDate()}</p>
+        </div>
+        <button
+          onClick={() => navigate('/profile')}
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl border-2 border-teal-100 bg-teal-50 text-teal-700 font-bold text-sm cursor-pointer hover:bg-teal-100 transition-colors"
+        >
+          <User size={15} /> My Profile
+        </button>
       </div>
 
       {!myBooking ? (

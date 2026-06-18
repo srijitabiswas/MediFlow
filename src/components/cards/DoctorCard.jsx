@@ -1,6 +1,7 @@
-import { Clock, Users } from 'lucide-react';
+import { Clock, Users, MapPin } from 'lucide-react';
 import { DEPARTMENTS } from '../../data/sampleData';
 import { statusInfo } from '../../utils/helpers';
+import { formatDistance } from '../../utils/distance';
 
 export default function DoctorCard({ doctor, selected, onClick }) {
   const dept = DEPARTMENTS.find((d) => d.id === doctor.dept) || DEPARTMENTS[0];
@@ -27,9 +28,17 @@ export default function DoctorCard({ doctor, selected, onClick }) {
         <div className="flex items-center gap-2 mb-1 flex-wrap">
           <span className="font-extrabold text-base text-gray-900">{doctor.name}</span>
           <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full ${st.cls}`}>{st.label}</span>
+          {doctor.distanceFromUserKm != null && (
+            <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-teal-50 text-teal-700 flex items-center gap-1">
+              <MapPin size={10} /> {formatDistance(doctor.distanceFromUserKm)} away
+            </span>
+          )}
         </div>
 
-        <p className="text-sm text-gray-500 mb-2">{doctor.spec}</p>
+        <p className="text-sm text-gray-500 mb-1">{doctor.spec}</p>
+        {doctor.clinicName && (
+          <p className="text-xs text-gray-400 mb-2">{doctor.clinicName} · {doctor.address}</p>
+        )}
 
         <div className="flex gap-4 flex-wrap">
           <span className="flex items-center gap-1 text-xs text-gray-500">

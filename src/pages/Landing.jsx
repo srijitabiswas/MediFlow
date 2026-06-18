@@ -1,5 +1,5 @@
-import { useNavigate } from 'react-router-dom';
 import { Clock, Zap, Navigation, Shield, CheckCircle } from 'lucide-react';
+import { useRequirePatientAccess } from '../utils/useRequirePatientAccess';
 
 const FEATURES = [
   { icon: Clock,      title: 'Live Queue Tracking',  desc: 'See your exact position in real-time. No guessing, no standing in lines.',                   color: '#0F6E56', bg: '#E1F5EE' },
@@ -24,7 +24,10 @@ const DEPTS = [
 ];
 
 export default function Landing() {
-  const navigate = useNavigate();
+  // Every patient-flow CTA on this page goes through this — it forces the
+  // demo role switcher to "patient" (fixing the Admin/Doctor → booking bug)
+  // and redirects to Login / Location setup first if either is missing.
+  const goToPatientFlow = useRequirePatientAccess();
 
   return (
     <div className="animate-fadeUp">
@@ -61,14 +64,14 @@ export default function Landing() {
 
           <div className="flex gap-4 justify-center flex-wrap">
             <button
-              onClick={() => navigate('/book')}
+              onClick={() => goToPatientFlow('/book')}
               className="px-10 py-4 rounded-2xl font-extrabold text-lg text-teal-600 transition-all hover:-translate-y-0.5 active:scale-95"
               style={{ background: '#fff', boxShadow: '0 8px 28px rgba(0,0,0,0.2)' }}
             >
               📅 Book Appointment
             </button>
             <button
-              onClick={() => navigate('/queue')}
+              onClick={() => goToPatientFlow('/queue')}
               className="px-10 py-4 rounded-2xl font-bold text-lg text-white border-2 transition-all hover:-translate-y-0.5"
               style={{ background: 'rgba(255,255,255,0.12)', borderColor: 'rgba(255,255,255,0.3)', backdropFilter: 'blur(8px)' }}
             >
@@ -94,7 +97,7 @@ export default function Landing() {
           {DEPTS.map((d) => (
             <button
               key={d.name}
-              onClick={() => navigate('/book')}
+              onClick={() => goToPatientFlow('/book')}
               className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-teal-50 hover:bg-teal-100 border border-teal-100 text-sm font-bold text-teal-700 cursor-pointer transition-colors"
             >
               {d.icon} {d.name}
@@ -151,7 +154,7 @@ export default function Landing() {
           </div>
 
           <div className="text-center mt-10">
-            <button onClick={() => navigate('/book')} className="btn-primary text-lg px-12 py-4">
+            <button onClick={() => goToPatientFlow('/book')} className="btn-primary text-lg px-12 py-4">
               Get Started Free →
             </button>
           </div>
