@@ -35,7 +35,13 @@ app.use('/api/admin', require('./routes/admin'));
 
 // Health check
 app.get('/api/health', (_req, res) => {
-  res.json({ status: 'OK', timestamp: new Date().toISOString(), service: 'MediFlow API' });
+  const dbConnected = mongoose.connection.readyState === 1; // 1 = connected
+  res.json({
+    status: 'OK',
+    dbConnected,
+    timestamp: new Date().toISOString(),
+    service: 'MediFlow API',
+  });
 });
 
 // ─── Socket.io ────────────────────────────────────────────────────────────────
