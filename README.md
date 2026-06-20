@@ -67,6 +67,7 @@ Optimized for:
 Desktop
 Tablet
 Mobile (large tap targets, designed for elderly & first-time users)
+
 🛠 Tech Stack
 Frontend
 React 18
@@ -91,86 +92,7 @@ MongoDB (Doctors, Patients, Appointments, Queue collections)
 Deployment
 Frontend
  
-Vercel / Netlify
-Backend
- 
-Render / Railway / Fly.io
- 
-Database
- 
-MongoDB Atlas (free tier)
- 
-📂 Project Structure
-MediFlow
-│
-├── backend
-│   ├── models
-│   ├── routes
-│   ├── socket
-│   ├── seed
-│   ├── utils
-│   ├── .env
-│   └── server.js
-│
-├── frontend
-│   ├── src
-│   │   ├── assets
-│   │   ├── components
-│   │   ├── context
-│   │   ├── data
-│   │   ├── pages
-│   │   ├── routes
-│   │   ├── services
-│   │   └── utils
-│   ├── public
-│   ├── .env
-│   ├── package.json
-│   └── vite.config.js
-│
-├── .gitignore
-└── README.md
-🚀 Installation
-Clone the repository
- 
-git clone https://github.com/srijitabiswas/MediFlow.git
- 
-cd MediFlow
-Install frontend
- 
-cd frontend
-npm install
-Install backend
- 
-cd backend
-npm install
-Run frontend
- 
-cd frontend
-npm run dev
-Run backend
- 
-cd backend
-npm run dev
-Frontend
- 
-http://localhost:5173
-Backend
- 
-http://localhost:5000
-🔑 Environment Variables
-Frontend (frontend/.env)
- 
-VITE_API_URL=http://localhost:5000
- 
-Backend (backend/.env)
- 
-MONGODB_URI=mongodb://localhost:27017/mediflow
- 
-PORT=5000
-FRONTEND_URL=http://localhost:5173
-NODE_ENV=development
- 
-🎯 Usage
+ 🎯 Usage
 1. Create Your Account
 Open the landing page.
 Click Book Appointment or Get Started Free.
