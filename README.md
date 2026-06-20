@@ -1,5 +1,4 @@
 ⚕️ MediFlow
-React · Vite · Node.js · Express · MongoDB · Socket.io · TailwindCSS
  
 🩺 Overview
 MediFlow is an AI-powered hospital queue and appointment optimization system that removes the single biggest source of patient frustration: not knowing how long you'll wait.
